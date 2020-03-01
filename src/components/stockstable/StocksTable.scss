@@ -1,0 +1,37 @@
+.MyStocksTable {
+  margin: 1.5rem 0;
+  width: 100%;
+  border: 1px solid #e8e8e8;
+}
+
+.table-header {
+  background-color: var(--primary-color);
+  color: #fff;
+
+  th {
+    padding: 1rem 0;
+    font-size: 1.55rem;
+    border: none;
+    font-weight: 500;
+    letter-spacing: 1px;
+  }
+}
+
+.table-body {
+  td {
+    text-align: center;
+    font-size: 1.4rem;
+    padding: .85rem 0;
+    font-weight: 400;
+  }
+
+  &-row {
+    &:nth-of-type(even) {
+      background-color: var(--tertiary-color);
+		}
+		
+		&.centered {
+			text-align: center;
+		}
+  }
+}

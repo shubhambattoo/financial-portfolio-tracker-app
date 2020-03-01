@@ -1,24 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import Header from './components/header/Header';
+import StocksTable from './components/stockstable/StocksTable';
+import StockList from './components/stockList/StockList';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <Header />
+      <div className="MyStocks">
+        <h1>My Stocks</h1>
+        <StocksTable />
+      </div>
+      <div className="AddStocksTitle">
+        <h2>Add Stocks to track</h2>
+        <StockList />
+      </div>
     </div>
   );
 }

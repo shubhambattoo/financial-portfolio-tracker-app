@@ -1,0 +1,12 @@
+.list {
+	min-height: 10rem;
+	column-count: 2;
+	margin: 1.5rem 0;
+
+	button {
+		display: block;
+		margin-bottom: 1.5rem;
+		padding: .5rem 3.2rem;
+		font-weight: 300;
+	}
+}
