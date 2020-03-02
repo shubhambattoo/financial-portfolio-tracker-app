@@ -1,16 +1,16 @@
 import React from 'react';
 import './StockList.scss';
 
-function StockList() {
+function StockList(props) {
   return (
     <>
       <div className="list">
-        <button className="btn StockButton">MSFT</button>
-        <button className="btn StockButton">MSFT</button>
-        <button className="btn StockButton">MSFT</button>
-        <button className="btn StockButton">MSFT</button>
-        <button className="btn StockButton">MSFT</button>
-        <button className="btn StockButton">MSFT</button>
+        {props.stocks.map(stock => (
+        <div className="list-item">
+          <button className="btn StockButton" key={stock.symbol}>{stock.symbol}</button>
+          <div className="list-name"> {stock.name} </div>
+        </div>
+        ))}
       </div>
     </>
   );
