@@ -29,28 +29,6 @@ export default class StocksTable extends Component {
                 <button className="btn btn--danger">Stop Tracking</button>
               </td>
             </tr>
-            <tr className="table-body-row">
-              <td>MSFT</td>
-              <td>Microsoft Corporation</td>
-              <td>20</td>
-              <td>2500</td>
-              <td>2100</td>
-              <td>400</td>
-              <td>
-                <button className="btn btn--danger">Stop Tracking</button>
-              </td>
-            </tr>
-            <tr className="table-body-row">
-              <td>MSFT</td>
-              <td>Microsoft Corporation</td>
-              <td>20</td>
-              <td>2500</td>
-              <td>2100</td>
-              <td>400</td>
-              <td>
-                <button className="btn btn--danger">Stop Tracking</button>
-              </td>
-            </tr>
           </tbody>
         </table>
         <div className="alert alert-info">No Stocks have been selected</div>
