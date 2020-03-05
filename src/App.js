@@ -10,7 +10,8 @@ class App extends React.Component {
     super();
     this.state = {
       stocks: [],
-      tracked: []
+      tracked: [],
+      apiExhausted: false
     };
   }
 
@@ -26,10 +27,12 @@ class App extends React.Component {
   getTrackedStocks = async () => {
     try {
       const tracked = await getTrackedStocks();
-      console.log(tracked);
       this.setState({ tracked });
     } catch (error) {
-      this.setState({ tracked: [] });
+      console.log("error happen");
+      this.setState({ apiExhausted: true }, () => {
+        console.log(this.state);
+      });
     }
   };
 
@@ -44,7 +47,10 @@ class App extends React.Component {
         <Header />
         <div className="MyStocks">
           <h1>My Stocks</h1>
-          <StocksTable stocks={this.state.tracked} />
+          <StocksTable
+            stocks={this.state.tracked}
+            isError={this.state.apiExhausted}
+          />
         </div>
         <div className="AddStocksTitle">
           <h2>Add Stocks to track</h2>

@@ -17,21 +17,28 @@ export const getStockLists = async () => {
 const formatTrackedStocks = async tracked => {
   try {
     const allData = tracked.map(async data => {
-      const res = await axios.get(
-        apiEndpoint + `&symbol=${data.stockSymbol}`
-      );
-      const today = format(new Date(), 'yyyy-MM-dd');
-      const currentDayData = res.data['Time Series (Daily)'][today];
-      data['stockData'] = currentDayData;
-      data['profit'] =
-        data.numberOfShares * currentDayData['4. close'] -
-        data.buyPrice * data.numberOfShares;
-      return data;
+      try {
+        const res = await axios.get(
+          apiEndpoint + `&symbol=${data.stockSymbol}`
+        );
+        const today = format(new Date(), 'yyyy-MM-dd');
+        if (res.data['Note']) {
+          throw new Error('server error')
+        }
+        const currentDayData = res.data['Time Series (Daily)'][today];
+        data['stockData'] = currentDayData;
+        data['profit'] =
+          data.numberOfShares * currentDayData['4. close'] -
+          data.buyPrice * data.numberOfShares;
+        return data;
+      } catch (error) {
+        throw new Error(error);
+      }
     });
     return await Promise.all(allData);
   } catch (error) {
     // console.log(error);
-    return [];
+    return error;
   }
 };
 
@@ -44,6 +51,6 @@ export const getTrackedStocks = async () => {
     const data = await formatTrackedStocks(tracked);
     return data;
   } catch (error) {
-    return [];
+    return error;
   }
 };
