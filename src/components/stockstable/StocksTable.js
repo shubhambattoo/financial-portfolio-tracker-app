@@ -3,6 +3,19 @@ import './StocksTable.scss';
 
 export default class StocksTable extends Component {
   render() {
+    const tableRow = this.props.stocks.map(stock => (
+      <tr className="table-body-row">
+        <td>{stock.stockSymbol}</td>
+        <td>{stock.stockName}</td>
+        <td>{stock.numberOfShares}</td>
+        <td>{stock.buyPrice}</td>
+        <td>{stock.stockData['4. close']}</td>
+        <td>{stock.profit}</td>
+        <td>
+          <button className="btn btn--danger">Stop Tracking</button>
+        </td>
+      </tr>
+    ));
     return (
       <>
         <table className="MyStocksTable" border="0">
@@ -17,19 +30,7 @@ export default class StocksTable extends Component {
               <th></th>
             </tr>
           </thead>
-          <tbody className="table-body">
-            <tr className="table-body-row">
-              <td>MSFT</td>
-              <td>Microsoft Corporation</td>
-              <td>20</td>
-              <td>2500</td>
-              <td>2100</td>
-              <td>400</td>
-              <td>
-                <button className="btn btn--danger">Stop Tracking</button>
-              </td>
-            </tr>
-          </tbody>
+          <tbody className="table-body">{tableRow}</tbody>
         </table>
         <div className="alert alert-info">No Stocks have been selected</div>
 
