@@ -55,9 +55,24 @@ export const getTrackedStocks = async () => {
   }
 };
 
+const getTrackedDBLen = async () => {
+  try {
+    const querySnapshot = await db.collection('trackedStocks').get();
+    const totalDocs = querySnapshot.docs.length;
+    return totalDocs;
+  } catch (error) {
+    return error;
+  }
+}
+
+
 export const addTrackedStock = async (data, id) => {
   try {
     // console.log(data);
+    const totalTrack = await getTrackedDBLen();
+    if (totalTrack >= 5) {
+      throw new Error(5);
+    }
     const tracked = await db.collection('trackedStocks').add(data);
     const stock = await db
       .collection('stocks')

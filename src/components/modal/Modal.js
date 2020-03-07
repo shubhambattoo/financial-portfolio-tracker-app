@@ -9,7 +9,8 @@ class Modal extends React.Component {
       noShares: '',
       buyPrice: '',
       buyDate: '',
-      stockId: ''
+      stockId: '',
+      feedback: ''
     };
   }
 
@@ -34,7 +35,7 @@ class Modal extends React.Component {
   add = () => {
     const { noShares, buyDate, buyPrice } = this.state;
     if (!noShares || !buyPrice || !buyDate) {
-      alert('All field are required');
+      alert('All field(s) are required');
       return;
     }
     const { name, symbol } = this.props.stock;
@@ -53,6 +54,10 @@ class Modal extends React.Component {
       .catch(err => {
         console.log(err);
         // console.log('failed');
+        if (err === 5) {
+          this.props.onModalHide(true);
+          return;
+        }
         alert('could not add document');
       });
   };
@@ -66,7 +71,7 @@ class Modal extends React.Component {
               Add <span className="text-cap">{this.props.stock.name}</span> to
               my Stocks
             </h3>
-            <div className="close">&times;</div>
+            <div className="close" onClick={() => this.props.onModalHide(false)}>&times;</div>
           </div>
           <div className="modal__content">
             <div className="add-form">

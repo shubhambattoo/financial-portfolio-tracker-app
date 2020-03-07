@@ -7,7 +7,8 @@ class StockList extends React.Component {
     super(props);
     this.state = {
       isModal: false,
-      selectedStock: undefined
+      selectedStock: undefined,
+      showList: true
     };
   }
 
@@ -15,25 +16,29 @@ class StockList extends React.Component {
     this.setState({ isModal: true, selectedStock: stock });
   };
 
-  hideModal = () => {
+  hideModal = (moreError = false) => {
     this.setState({ isModal: false, selectedStock: undefined });
     this.props.onAdd();
+    if (moreError) {
+      this.setState({ showList: false });
+    }
   };
 
   render() {
     return (
       <>
-        {this.props.stocks.length > 0 && (
+        {this.state.showList && (
           <div className="list">
             {this.props.stocks.map(
               stock =>
                 !stock.isTracking && (
-                  <div
-                    className="list-item"
-                    key={stock.symbol}
-                    onClick={() => this.showModal(stock)}
-                  >
-                    <button className="btn StockButton">{stock.symbol}</button>
+                  <div className="list-item" key={stock.symbol}>
+                    <button
+                      className="btn StockButton"
+                      onClick={() => this.showModal(stock)}
+                    >
+                      {stock.symbol}
+                    </button>
                     <div className="list-name"> {stock.name} </div>
                   </div>
                 )
