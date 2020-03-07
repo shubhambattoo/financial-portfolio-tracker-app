@@ -3,7 +3,7 @@ import './App.scss';
 import Header from './components/header/Header';
 import StocksTable from './components/stockstable/StocksTable';
 import StockList from './components/stockList/StockList';
-import { getStockLists, getTrackedStocks } from './util/data';
+import { getStockLists, getTrackedStocks, updateTracked } from './util/data';
 
 class App extends React.Component {
   constructor() {
@@ -11,7 +11,8 @@ class App extends React.Component {
     this.state = {
       stocks: [],
       tracked: [],
-      apiExhausted: false
+      apiExhausted: false,
+      loadingTrack: true
     };
   }
 
@@ -25,21 +26,40 @@ class App extends React.Component {
   };
 
   getTrackedStocks = async () => {
+    this.setState({ loadingTrack: true });
     try {
       const tracked = await getTrackedStocks();
-      this.setState({ tracked });
+      if (tracked.message) {
+        this.setState({ apiExhausted: true });
+        return;
+      }
+      this.setState({ tracked, loadingTrack: false });
     } catch (error) {
-      console.log("error happen");
-      this.setState({ apiExhausted: true }, () => {
-        console.log(this.state);
-      });
+      // console.log(error);
+      if (error.message) {
+        this.setState({ apiExhausted: true, tracked: [] });
+      }
     }
   };
 
   onAdd = () => {
     this.getStockLists();
     this.getTrackedStocks();
-  }
+  };
+
+  handleDelete = stock => {
+    updateTracked(stock.id, stock.stockSymbol)
+      .then(() => {
+        this.getStockLists();
+        this.setState(prevState => {
+          prevState.tracked = prevState.tracked.filter(s => s.id !== stock.id);
+          return prevState;
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   componentDidMount() {
     this.getStockLists();
@@ -55,6 +75,8 @@ class App extends React.Component {
           <StocksTable
             stocks={this.state.tracked}
             isError={this.state.apiExhausted}
+            loading={this.state.loadingTrack}
+            handleDelete={this.handleDelete}
           />
         </div>
         <div className="AddStocksTitle">

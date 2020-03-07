@@ -1,6 +1,7 @@
 import './Modal.scss';
 import React from 'react';
-import { addTrackedStock, getOneStock } from './../../util/data';
+import { addTrackedStock } from './../../util/data';
+import PropTypes from 'prop-types';
 
 class Modal extends React.Component {
   constructor(props) {
@@ -12,16 +13,6 @@ class Modal extends React.Component {
       stockId: '',
       feedback: ''
     };
-  }
-
-  componentDidMount() {
-    getOneStock(this.props.stock.symbol)
-      .then(id => {
-        this.setState({ stockId: id });
-      })
-      .catch(err => {
-        console.log(err);
-      });
   }
 
   handleInputChange = ev => {
@@ -47,8 +38,13 @@ class Modal extends React.Component {
       stockSymbol: symbol
     };
 
-    addTrackedStock(data, this.state.stockId)
+    addTrackedStock(data, this.props.stock.id)
       .then(data => {
+        if (data && data.message) {
+          this.props.onModalHide(true);
+          return;
+        }
+        // console.log(typeof data);
         this.props.onModalHide();
       })
       .catch(err => {
@@ -122,3 +118,8 @@ class Modal extends React.Component {
 }
 
 export default Modal;
+
+Modal.propTypes = {
+  stock: PropTypes.object.isRequired,
+  onModalHide: PropTypes.func.isRequired
+}
