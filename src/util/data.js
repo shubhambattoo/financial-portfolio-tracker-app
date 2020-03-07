@@ -23,7 +23,7 @@ const formatTrackedStocks = async tracked => {
         );
         const today = format(new Date(), 'yyyy-MM-dd');
         if (res.data['Note']) {
-          throw new Error('server error')
+          throw new Error('server error');
         }
         const currentDayData = res.data['Time Series (Daily)'][today];
         data['stockData'] = currentDayData;
@@ -50,6 +50,38 @@ export const getTrackedStocks = async () => {
     // eslint-disable-next-line array-callback-return
     const data = await formatTrackedStocks(tracked);
     return data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const addTrackedStock = async (data, id) => {
+  try {
+    // console.log(data);
+    const tracked = await db.collection('trackedStocks').add(data);
+    const stock = await db
+      .collection('stocks')
+      .doc(id)
+      .update({
+        isTracking: true
+      });
+    if (stock && tracked) {
+      return tracked;
+    }
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getOneStock = async symbol => {
+  try {
+    const ref = db.collection('stocks').where('symbol', '==', symbol);
+    const snapShot = await ref.get();
+    let id;
+    snapShot.forEach(doc => {
+      id = doc.id;
+    });
+    return id;
   } catch (error) {
     return error;
   }

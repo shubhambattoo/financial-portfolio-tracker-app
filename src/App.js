@@ -36,6 +36,11 @@ class App extends React.Component {
     }
   };
 
+  onAdd = () => {
+    this.getStockLists();
+    this.getTrackedStocks();
+  }
+
   componentDidMount() {
     this.getStockLists();
     this.getTrackedStocks();
@@ -54,7 +59,7 @@ class App extends React.Component {
         </div>
         <div className="AddStocksTitle">
           <h2>Add Stocks to track</h2>
-          <StockList stocks={this.state.stocks} />
+          <StockList stocks={this.state.stocks} onAdd={this.onAdd} />
         </div>
       </div>
     );

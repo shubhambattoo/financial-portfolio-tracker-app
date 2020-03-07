@@ -30,6 +30,11 @@ body {
   color: var(--font-color);
 }
 
+// utilities
+.text-cap {
+  text-transform: capitalize !important;
+}
+
 // Components
 .alert {
   padding: 1.5rem;
