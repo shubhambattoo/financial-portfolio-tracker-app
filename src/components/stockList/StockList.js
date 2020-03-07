@@ -13,19 +13,7 @@ class StockList extends React.Component {
     };
   }
 
-  componentDidMount() {
-    getTrackedDBLen()
-      .then(len => {
-        if (len >= 5) {
-          this.setState({ showList: false });
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
-
-  componentDidUpdate() {
+  componentWillUpdate() {
     getTrackedDBLen()
       .then(len => {
         if (len >= 5) {
@@ -41,7 +29,7 @@ class StockList extends React.Component {
     this.setState({ isModal: true, selectedStock: stock });
   };
 
-  hideModal = (moreError = false) => {
+  hideModal = (moreError = false, doc = null) => {
     if (moreError) {
       this.setState({
         showList: false,
@@ -51,7 +39,7 @@ class StockList extends React.Component {
       return;
     }
     this.setState({ isModal: false, selectedStock: undefined });
-    this.props.onAdd();
+    this.props.onAdd(doc);
   };
 
   render() {

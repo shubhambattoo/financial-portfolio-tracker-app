@@ -3,7 +3,12 @@ import './App.scss';
 import Header from './components/header/Header';
 import StocksTable from './components/stockstable/StocksTable';
 import StockList from './components/stockList/StockList';
-import { getStockLists, getTrackedStocks, updateTracked } from './util/data';
+import {
+  getStockLists,
+  getTrackedStocks,
+  updateTracked,
+  getOneStockInfo
+} from './util/data';
 
 class App extends React.Component {
   constructor() {
@@ -42,17 +47,45 @@ class App extends React.Component {
     }
   };
 
-  onAdd = () => {
-    this.getStockLists();
-    this.getTrackedStocks();
+  onHandleAdd(doc) {
+    getOneStockInfo(doc)
+      .then(currentDayData => {
+        const data = { ...doc };
+        data['stockData'] = currentDayData;
+        data['profit'] =
+          (currentDayData['4. close'] - data.buyPrice) * data.numberOfShares;
+        this.setState(prevState => {
+          prevState.tracked.push(data);
+          prevState.stocks = prevState.stocks.map(s => {
+            if (s.symbol === data.stockSymbol) {
+              s.isTracking = true;
+            }
+            return s;
+          });
+          return prevState;
+        });
+      })
+      .catch(err => {
+        this.setState({ apiExhausted: true });
+        return;
+      });
+  }
+
+  onAdd = doc => {
+    this.onHandleAdd(doc);
   };
 
   handleDelete = stock => {
     updateTracked(stock.id, stock.stockSymbol)
       .then(() => {
-        this.getStockLists();
         this.setState(prevState => {
           prevState.tracked = prevState.tracked.filter(s => s.id !== stock.id);
+          prevState.stocks = prevState.stocks.map(s => {
+            if (s.symbol === stock.stockSymbol) {
+              s.isTracking = false;
+            }
+            return s;
+          });
           return prevState;
         });
       })

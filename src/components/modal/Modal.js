@@ -30,7 +30,7 @@ class Modal extends React.Component {
       return;
     }
     const { name, symbol } = this.props.stock;
-    const data = {
+    const doc = {
       numberOfShares: parseInt(noShares, 10),
       buyPrice: parseFloat(buyPrice),
       buyDate: new Date(buyDate),
@@ -38,14 +38,14 @@ class Modal extends React.Component {
       stockSymbol: symbol
     };
 
-    addTrackedStock(data, this.props.stock.id)
+    addTrackedStock(doc, this.props.stock.id)
       .then(data => {
         if (data && data.message) {
           this.props.onModalHide(true);
           return;
         }
         // console.log(typeof data);
-        this.props.onModalHide();
+        this.props.onModalHide(false, doc);
       })
       .catch(err => {
         console.log(err);

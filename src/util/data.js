@@ -73,6 +73,7 @@ export const addTrackedStock = async (data, id) => {
       throw new Error(5);
     }
     const tracked = await db.collection('trackedStocks').add(data);
+    // console.log(tracked.get());
     const stock = await db
       .collection('stocks')
       .doc(id)
@@ -80,7 +81,7 @@ export const addTrackedStock = async (data, id) => {
         isTracking: true
       });
     if (stock && tracked) {
-      return tracked;
+      return tracked.id;
     }
   } catch (error) {
     return error;
@@ -141,6 +142,14 @@ export const getOneTracked = async symbol => {
   } catch (error) {
     return error;
   }
+};
+
+export const getWithId = async id => {
+  const snapShot = await db
+    .collection('stocks')
+    .doc(id)
+    .get();
+  console.log(snapShot)
 };
 
 export const getOneStock = async symbol => {
