@@ -144,14 +144,6 @@ export const getOneTracked = async symbol => {
   }
 };
 
-export const getWithId = async id => {
-  const snapShot = await db
-    .collection('stocks')
-    .doc(id)
-    .get();
-  console.log(snapShot)
-};
-
 export const getOneStock = async symbol => {
   try {
     const ref = db.collection('stocks').where('symbol', '==', symbol);
