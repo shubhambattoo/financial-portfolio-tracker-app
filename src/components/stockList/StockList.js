@@ -2,6 +2,7 @@ import React from 'react';
 import './StockList.scss';
 import Modal from './../modal/Modal';
 import { getTrackedDBLen } from './../../util/data';
+import PropTypes from 'prop-types';
 
 class StockList extends React.Component {
   constructor(props) {
@@ -80,3 +81,12 @@ class StockList extends React.Component {
 }
 
 export default StockList;
+
+StockList.propTypes = {
+  stocks: PropTypes.arrayOf(PropTypes.shape({
+    name: PropTypes.string,
+    symbol: PropTypes.string,
+    isTracking: PropTypes.bool
+  })).isRequired,
+  onAdd: PropTypes.func
+};

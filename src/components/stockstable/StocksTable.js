@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './StocksTable.scss';
+import PropTypes from 'prop-types';
 
 export default class StocksTable extends Component {
   handleDelete = (stock) => {
@@ -50,3 +51,8 @@ export default class StocksTable extends Component {
     );
   }
 }
+
+StocksTable.propTypes = {
+  stocks: PropTypes.array.isRequired,
+  handleDelete: PropTypes.func
+};
