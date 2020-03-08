@@ -78,7 +78,7 @@ class Modal extends React.Component {
               <div className="field">
                 <label htmlFor="name">No. of Shares</label>
                 <input
-                  type="text"
+                  type="number"
                   name="noShares"
                   id="noShares"
                   placeholder="No. of Shares"
