@@ -25,6 +25,10 @@
     font-weight: 400;
   }
 
+  button {
+    width: 10rem;
+  }
+
   &-row {
     &:nth-of-type(even) {
       background-color: var(--tertiary-color);
