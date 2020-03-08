@@ -67,13 +67,13 @@ class Modal extends React.Component {
               Add <span className="text-cap">{this.props.stock.name}</span> to
               my Stocks
             </h3>
-            <div className="close" onClick={() => this.props.onModalHide(false)}>&times;</div>
+            <div className="close" onClick={() => this.props.onModalHide(false, undefined)}>&times;</div>
           </div>
           <div className="modal__content">
             <div className="add-form">
               <div className="field">
                 <label htmlFor="name">Company Name</label>
-                <div>{this.props.stock.name}</div>
+                <div className="text-cap">{this.props.stock.name}</div>
               </div>
               <div className="field">
                 <label htmlFor="name">No. of Shares</label>

@@ -3,9 +3,9 @@ import './StocksTable.scss';
 import PropTypes from 'prop-types';
 
 export default class StocksTable extends Component {
-  handleDelete = (stock) => {
+  handleDelete = stock => {
     this.props.handleDelete(stock);
-  }
+  };
   render() {
     let tableRow;
     if (this.props.stocks.length > 0) {
@@ -18,7 +18,12 @@ export default class StocksTable extends Component {
           <td>{stock.stockData['4. close']}</td>
           <td>{stock.profit}</td>
           <td>
-            <button className="btn btn--danger" onClick={() => this.handleDelete(stock)}>Stop Tracking</button>
+            <button
+              className="btn btn--danger StopTrackingBtn"
+              onClick={() => this.handleDelete(stock)}
+            >
+              Stop Tracking
+            </button>
           </td>
         </tr>
       ));

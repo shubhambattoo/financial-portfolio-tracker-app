@@ -40,7 +40,9 @@ class StockList extends React.Component {
       return;
     }
     this.setState({ isModal: false, selectedStock: undefined });
-    this.props.onAdd(doc);
+    if (doc) {
+      this.props.onAdd(doc);
+    }
   };
 
   render() {
