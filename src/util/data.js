@@ -1,5 +1,4 @@
 import db from './../firebase/init';
-// import { format, subDays } from 'date-fns';
 import axios from 'axios';
 
 const apiEndpoint = `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&apikey=${process.env.REACT_APP_APIKEY}`;
@@ -94,18 +93,7 @@ export const getOneStockInfo = async data => {
     if (res.data['Note']) {
       throw new Error('server error');
     }
-    // const today = new Date();
-    // const day = today.getDay();
-    // let formattedToday = format(today, 'yyyy-MM-dd');
-
-    // if (day === 6) {
-    //   const backOne = subDays(today, 1);
-    //   formattedToday = format(backOne, 'yyyy-MM-dd');
-    // } else if (day === 0) {
-    //   const backOne = subDays(today, 2);
-    //   formattedToday = format(backOne, 'yyyy-MM-dd');
-    // }
-    const lastRefreshed = res.data['Meta Data']['3. Last Refreshed']
+    const lastRefreshed = res.data['Meta Data']['3. Last Refreshed'].split(" ")[0];
     const currentDayData = res.data['Time Series (Daily)'][lastRefreshed];
     return currentDayData;
   } catch (error) {
