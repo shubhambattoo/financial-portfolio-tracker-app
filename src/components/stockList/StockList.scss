@@ -4,23 +4,24 @@
   margin: 1.5rem 0;
 
   &-item {
-	display: flex;
-	height: auto;
-	margin-bottom: 1.5rem;
+    display: flex;
+    height: auto;
+    margin-bottom: 1.5rem;
   }
 
   &-name {
-	align-self: center;
-	font-size: 1.4rem;
-	text-transform: capitalize;
+    align-self: center;
+    font-size: 1.4rem;
+    text-transform: capitalize;
   }
 
   button {
     display: block;
     margin-right: 1rem;
-	padding: 0.5rem 3.2rem;
+    padding: 0.5rem 3.2rem;
     font-weight: 300;
     text-transform: uppercase;
     align-self: flex-start;
+    width: 10rem;
   }
 }
